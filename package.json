@@ -1,0 +1,28 @@
+{
+  "name": "arnaudballand_7_20042022",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sass": "sass --watch ./styles/sass/style.scss ./styles/css/style.css",
+    "lint": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BallandArnaud/ArnaudBalland_7_20042022.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BallandArnaud/ArnaudBalland_7_20042022/issues"
+  },
+  "homepage": "https://github.com/BallandArnaud/ArnaudBalland_7_20042022#readme",
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.2"
+  }
+}
