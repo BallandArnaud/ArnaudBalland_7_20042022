@@ -1,0 +1,11 @@
+body{
+  box-sizing: border-box;
+  font-family: $font-primary;
+  font-size: 12px;
+  background-color: #ffffff;
+}
+
+.container {
+  max-width: 1240px;
+  margin: auto;
+}

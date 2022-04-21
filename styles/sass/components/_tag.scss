@@ -1,0 +1,25 @@
+.tag {
+  color: $text-light;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 37px;
+  width: 107px;
+  border-radius: $border-radius;
+
+  &__btn {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+  }
+
+  &--ingredient {
+    background-color: $blue;
+    
+    &:hover {
+      background-color: darken($blue, 10%);
+    }
+  }
+}

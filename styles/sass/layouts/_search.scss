@@ -1,0 +1,42 @@
+.search{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  margin-bottom: 25px;
+
+  &__bar{
+      display: flex;
+      justify-content: space-around;
+      background-color: $lightgrey;
+      height: 69px;
+      border-radius: $border-radius;
+      padding: 0 20px;
+      margin-bottom: 25px;
+
+      & input{
+          background-color: transparent;
+          width: 100%;
+          border: none;
+          outline: none;
+          font-size: 18px;
+          font-weight: 400;
+      }
+
+      & input::placeholder {
+        font-size: 18px;
+      }
+
+      & img{
+          cursor: pointer;
+          width: 32px;
+      }
+  }
+
+  &__tags {
+    margin-bottom: 15px;
+  }
+
+  &__dropdowns {
+    display: flex;
+  }
+} 

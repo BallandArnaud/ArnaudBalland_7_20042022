@@ -1,0 +1,22 @@
+.dropdown {
+  font-size: 18px;
+  color: $text-light;
+  width: 170px;
+  height: 69px;
+  border-radius: $border-radius;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: 700;
+  margin-right: 20px;
+}
+
+#dropdown-ingredients{
+  background-color: $blue;
+}
+#dropdown-appliances{
+  background-color: $red;
+}
+#dropdown-utensils{
+  background-color: $green;
+} 
