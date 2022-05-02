@@ -6,6 +6,21 @@ export class RecipeCard {
     this.ingredients = recipe.ingredients
   }
 
+  shortenUnit() {
+    const newUnits = this.ingredients.map((ingredient) => {
+      switch (ingredient.unit) {
+        case "grammes":
+          return "g"
+        case "cuillères à soupe":
+          return "cuillères"
+        default:
+          return ingredient.unit
+      }
+    })
+    console.log(newUnits)
+    return newUnits
+  }
+
   createIngredientsList() {
     const ingredientDomElements = this.ingredients.map((ingredient) => {
       if (ingredient.quantity === undefined && ingredient.unit === undefined) {
