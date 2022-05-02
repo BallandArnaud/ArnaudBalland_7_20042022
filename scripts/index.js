@@ -36,6 +36,19 @@ const $dropdownListIngredients = document.getElementById("list-ingredients")
 const listAllIngredients = []
 const listAllUstensils = []
 
+function filterGlobal(arr, requete) {
+  return arr.filter((recipe) => {
+    const ingredientsAsString = recipe.ingredients
+      .map((ing) => ing.ingredient.toLowerCase())
+      .join(" ")
+    return (
+      recipe.name.toLowerCase().includes(requete) ||
+      recipe.description.toLowerCase().includes(requete) ||
+      ingredientsAsString.includes(requete)
+    )
+  })
+}
+
 // Add all recipes
 const recipesDomElements = recipes.map((recipe) => {
   const recipeCard = new RecipeCard(recipe)
@@ -46,9 +59,22 @@ $recipeGrid.innerHTML = recipesDomElements.join("")
 // Listener Search Bar
 $searchBar.addEventListener("input", (e) => {
   const inputValue = e.target.value.toLowerCase()
+  const messageNoResultat =
+    "Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc."
   if (inputValue.length >= MINIMUM_INPUT_NUMBER) {
     $recipeGrid.innerHTML = ""
-    console.log(inputValue)
+    const result = filterGlobal(recipes, inputValue)
+    if (result.length === 0) {
+      $recipeGrid.innerHTML = messageNoResultat
+    } else {
+      const resultDomElement = result.map((recipe) => {
+        const recipeCard = new RecipeCard(recipe)
+        return recipeCard.createCard()
+      })
+      $recipeGrid.innerHTML = resultDomElement.join("")
+    }
+  } else {
+    $recipeGrid.innerHTML = recipesDomElements.join("")
   }
 })
 
