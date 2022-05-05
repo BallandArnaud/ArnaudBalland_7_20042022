@@ -3,9 +3,9 @@ import { RecipeCard } from "./templates/RecipeCard.js"
 
 // console.log(recipes)
 const MINIMUM_INPUT_NUMBER = 3
+
 // DOM
 const $recipeGrid = document.querySelector(".recipes .grid")
-// Main Search bar
 const $searchBar = document.querySelector(".search__bar input")
 // Dropdown Ingredient
 const $dropdownIngredients = document.getElementById("dropdown-ingredients")
@@ -33,8 +33,27 @@ const $dropdownListIngredients = document.getElementById("list-ingredients")
 // const $dropdownListUstensils = document.getElementById("list-ustensils")
 
 // Array
-const listAllIngredients = []
-const listAllUstensils = []
+let listAllIngredients = []
+let listAllUstensils = []
+
+function openDropdown() {
+  $dropdownIngredientsBtn.style.display = "none"
+  $dropdownIngredientsContent.style.display = "flex"
+  $dropdownIngredientsInput.focus()
+}
+
+function closeDropdown() {
+  $dropdownIngredientsBtn.style.display = "flex"
+  $dropdownIngredientsContent.style.display = "none"
+}
+
+function sortAlphabetically(arr) {
+  return [...arr].sort((a, b) => a.localeCompare(b))
+}
+
+function capitalizeFirstLetterAndLowerCaseTheRest(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+}
 
 function filterGlobal(arr, requete) {
   return arr.filter((recipe) => {
@@ -49,45 +68,65 @@ function filterGlobal(arr, requete) {
   })
 }
 
+function createDropdownListItem(item, htmlContainer) {
+  const itemList = document.createElement("li")
+  itemList.classList.add("dropdown__list__item")
+  itemList.innerHTML = `${item} `
+  htmlContainer.appendChild(itemList)
+  return htmlContainer
+}
+
+function showResult(result) {
+  const resultDomElement = result.map((recipe) => {
+    const recipeCard = new RecipeCard(recipe)
+    return recipeCard.createCard()
+  })
+  $recipeGrid.innerHTML = resultDomElement.join("")
+}
+
+function createDropdownList(result) {
+  result.forEach((recipe) => {
+    const { ingredients } = recipe
+    const { ustensils } = recipe
+
+    ingredients.forEach((ingredient) => {
+      // console.log(ingredient.ingredient)
+      const ingredientWithcapitalizeAndLowerCase =
+        capitalizeFirstLetterAndLowerCaseTheRest(ingredient.ingredient)
+      listAllIngredients.push(ingredientWithcapitalizeAndLowerCase)
+    })
+
+    ustensils.forEach((ustensil) => {
+      // console.log(ustensil)
+      const ustensilWithcapitalizeAndLowerCase =
+        capitalizeFirstLetterAndLowerCaseTheRest(ustensil)
+      listAllUstensils.push(ustensilWithcapitalizeAndLowerCase)
+    })
+  })
+}
+createDropdownList(recipes)
+
+function refreshDropdownList(results) {
+  // console.log("Résultat :", results)
+  listAllIngredients = []
+  listAllUstensils = []
+  $dropdownListIngredients.innerHTML = ""
+  // $dropdownListUstensils.innerHTML = ""
+  createDropdownList(results)
+  const listAllIngredientsByAlphabeticalOrder =
+    sortAlphabetically(listAllIngredients)
+  listAllIngredientsByAlphabeticalOrder.forEach((ingredient) => {
+    // console.log(ingredient)
+    createDropdownListItem(ingredient, $dropdownListIngredients)
+  })
+}
+
 // Add all recipes
 const recipesDomElements = recipes.map((recipe) => {
   const recipeCard = new RecipeCard(recipe)
   return recipeCard.createCard()
 })
 $recipeGrid.innerHTML = recipesDomElements.join("")
-
-// Listener Search Bar
-$searchBar.addEventListener("input", (e) => {
-  const inputValue = e.target.value.toLowerCase()
-  const messageNoResultat =
-    "Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc."
-  if (inputValue.length >= MINIMUM_INPUT_NUMBER) {
-    $recipeGrid.innerHTML = ""
-    const result = filterGlobal(recipes, inputValue)
-    if (result.length === 0) {
-      $recipeGrid.innerHTML = messageNoResultat
-    } else {
-      const resultDomElement = result.map((recipe) => {
-        const recipeCard = new RecipeCard(recipe)
-        return recipeCard.createCard()
-      })
-      $recipeGrid.innerHTML = resultDomElement.join("")
-    }
-  } else {
-    $recipeGrid.innerHTML = recipesDomElements.join("")
-  }
-})
-
-function openDropdown() {
-  $dropdownIngredientsBtn.style.display = "none"
-  $dropdownIngredientsContent.style.display = "flex"
-  $dropdownIngredientsInput.focus()
-}
-
-function closeDropdown() {
-  $dropdownIngredientsBtn.style.display = "flex"
-  $dropdownIngredientsContent.style.display = "none"
-}
 
 // Listener Ingredients dropdown
 $dropdownIngredients.addEventListener("click", (e) => {
@@ -102,75 +141,51 @@ window.addEventListener("click", (e) => {
   }
 })
 
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
-function lowerCaseExceptFirstLetter(string) {
-  return string.charAt(0) + string.slice(1).toLowerCase()
-}
-
-recipes.forEach((recipe) => {
-  const { ingredients } = recipe
-  const { ustensils } = recipe
-  // console.log(ingredients)
-  // console.log(ustensils)
-
-  ingredients.forEach((ingredient) => {
-    // console.log(ingredient.ingredient)
-    const ingredientWithcapitalizeFirstLetter = capitalizeFirstLetter(
-      ingredient.ingredient
-    )
-    const ingredientWithcapitalizeAndLowerCase = lowerCaseExceptFirstLetter(
-      ingredientWithcapitalizeFirstLetter
-    )
-    listAllIngredients.push(ingredientWithcapitalizeAndLowerCase)
-  })
-
-  ustensils.forEach((ustensil) => {
-    // console.log(ustensil)
-    const ustensilWithcapitalizeFirstLetter = capitalizeFirstLetter(ustensil)
-    const ustensilWithcapitalizeAndLowerCase = lowerCaseExceptFirstLetter(
-      ustensilWithcapitalizeFirstLetter
-    )
-    listAllUstensils.push(ustensilWithcapitalizeAndLowerCase)
-  })
-})
-
-// console.log(listAllIngredients)
-// console.log(listAllUstensils)
-
 // remove duplicates in array
 const newListAllIngredients = [...new Set(listAllIngredients)]
-// console.log(newListAllIngredients)
-
 const newListAllUstensils = [...new Set(listAllUstensils)]
-// console.log(newListAllUstensils)
 
-// Sort by Alphabetical Order
-const listAllIngredientsByAlphabeticalOrder = [...newListAllIngredients].sort(
-  (a, b) => a.localeCompare(b)
+const listAllIngredientsByAlphabeticalOrder = sortAlphabetically(
+  newListAllIngredients
 )
 // console.log(listAllIngredientsByAlphabeticalOrder)
-
-const listAllUstensilsByAlphabeticalOrder = [...newListAllUstensils].sort(
-  (a, b) => a.localeCompare(b)
-)
-console.log(listAllUstensilsByAlphabeticalOrder)
-
-function createListItem(item, htmlContainer) {
-  const itemList = document.createElement("li")
-  itemList.classList.add("dropdown__list__item")
-  itemList.innerHTML = `${item} `
-  htmlContainer.appendChild(itemList)
-  return htmlContainer
-}
-
 listAllIngredientsByAlphabeticalOrder.forEach((ingredient) => {
-  // console.log(ingredient)
-  createListItem(ingredient, $dropdownListIngredients)
+  createDropdownListItem(ingredient, $dropdownListIngredients)
 })
 
+const listAllUstensilsByAlphabeticalOrder =
+  sortAlphabetically(newListAllUstensils)
+console.log(listAllUstensilsByAlphabeticalOrder)
+
 // listAllUstensilsByAlphabeticalOrder.forEach((ustensil) => {
-//   createListItem(ustensil, $dropdownListUstensils)
+//   createDropdownListItem(ustensil, $dropdownListUstensils)
 // })
+
+console.log(listAllIngredients)
+console.log(newListAllIngredients)
+console.log(listAllUstensils)
+console.log(newListAllUstensils)
+
+// Listener Search Bar
+$searchBar.addEventListener("input", (e) => {
+  const inputValue = e.target.value.toLowerCase()
+  const messageNoResultat =
+    "<p>Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.</p>"
+  if (inputValue.length >= MINIMUM_INPUT_NUMBER) {
+    $recipeGrid.innerHTML = ""
+    const result = filterGlobal(recipes, inputValue)
+    if (result.length === 0) {
+      $recipeGrid.innerHTML = messageNoResultat
+      $dropdownListIngredients.innerHTML = ""
+    } else {
+      showResult(result)
+      refreshDropdownList(result)
+    }
+  } else {
+    $recipeGrid.innerHTML = recipesDomElements.join("")
+    listAllIngredientsByAlphabeticalOrder.forEach((ingredient) => {
+      // console.log(ingredient)
+      createDropdownListItem(ingredient, $dropdownListIngredients)
+    })
+  }
+})

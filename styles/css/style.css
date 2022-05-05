@@ -435,6 +435,7 @@ body {
 .dropdown__list__item {
   width: 200px;
   padding: 2px 5px;
+  cursor: pointer;
 }
 
 #dropdown-ingredients,
