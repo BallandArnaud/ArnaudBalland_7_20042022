@@ -36,6 +36,10 @@
     padding: 20px;
   }
 
+  &__content.dropdown-visible {
+    display: flex;
+  }
+
   &__search {
     display: flex;
     justify-content: space-between;
@@ -73,16 +77,19 @@
 }
 
 #dropdown-ingredients,
-#dropdown-ingredients-button {
+#dropdown-ingredients-button,
+#dropdown-ingredients-content {
   background-color: $blue;
 }
 
 #dropdown-appliances,
-#dropdown-appliances-button {
+#dropdown-appliances-button,
+#dropdown-appliances-content {
   background-color: $red;
 }
 
 #dropdown-utensils,
-#dropdown-utensils-button {
+#dropdown-utensils-button,
+#dropdown-utensils-content {
   background-color: $green;
 } 

@@ -27,9 +27,11 @@ export class RecipeCard {
         return `<li>${ingredient.ingredient}</li>`
       }
       if (ingredient.unit === undefined) {
-        return `<li>${ingredient.ingredient}: <span class="card__quantity">${ingredient.quantity}</span></li>`
+        return `<li>${ingredient.ingredient}: 
+        <span class="card__quantity">${ingredient.quantity}</span></li>`
       }
-      return `<li>${ingredient.ingredient}: <span class="card__quantity">${ingredient.quantity} ${ingredient.unit}</span></li>`
+      return `<li>${ingredient.ingredient}: 
+      <span class="card__quantity">${ingredient.quantity} ${ingredient.unit}</span></li>`
     })
     return ingredientDomElements.join("")
   }

@@ -357,19 +357,35 @@ body {
   justify-content: space-around;
   align-items: center;
   height: 37px;
-  width: 107px;
+  margin-left: 20px;
   border-radius: 5px;
+  padding-left: 5px;
+}
+.tag:first-child {
+  margin-left: 0px;
 }
 .tag__btn {
   border: 0;
   background-color: transparent;
   cursor: pointer;
 }
-.tag--ingredient {
+.tag--ingredients {
   background-color: #3282F7;
 }
-.tag--ingredient:hover {
+.tag--ingredients:hover {
   background-color: #0966ed;
+}
+.tag--appliances {
+  background-color: #ED6454;
+}
+.tag--appliances:hover {
+  background-color: #e83a26;
+}
+.tag--utensils {
+  background-color: #68D9A4;
+}
+.tag--utensils:hover {
+  background-color: #3fcf8b;
 }
 
 .dropdown {
@@ -407,6 +423,9 @@ body {
   overflow-y: scroll;
   padding: 20px;
 }
+.dropdown__content.dropdown-visible {
+  display: flex;
+}
 .dropdown__search {
   display: flex;
   justify-content: space-between;
@@ -439,17 +458,20 @@ body {
 }
 
 #dropdown-ingredients,
-#dropdown-ingredients-button {
+#dropdown-ingredients-button,
+#dropdown-ingredients-content {
   background-color: #3282F7;
 }
 
 #dropdown-appliances,
-#dropdown-appliances-button {
+#dropdown-appliances-button,
+#dropdown-appliances-content {
   background-color: #ED6454;
 }
 
 #dropdown-utensils,
-#dropdown-utensils-button {
+#dropdown-utensils-button,
+#dropdown-utensils-content {
   background-color: #68D9A4;
 }
 
@@ -559,6 +581,7 @@ header {
 }
 .search__tags {
   margin-bottom: 15px;
+  display: flex;
 }
 .search__dropdowns {
   display: flex;

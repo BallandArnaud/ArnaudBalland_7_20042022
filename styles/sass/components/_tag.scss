@@ -6,8 +6,13 @@
   justify-content: space-around;
   align-items: center;
   height: 37px;
-  width: 107px;
+  margin-left: 20px;
   border-radius: $border-radius;
+  padding-left: 5px;
+
+  &:first-child{
+    margin-left: 0px;
+  }
 
   &__btn {
     border: 0;
@@ -15,11 +20,27 @@
     cursor: pointer;
   }
 
-  &--ingredient {
+  &--ingredients {
     background-color: $blue;
     
     &:hover {
       background-color: darken($blue, 10%);
+    }
+  }
+
+  &--appliances {
+    background-color: $red;
+    
+    &:hover {
+      background-color: darken($red, 10%);
+    }
+  }
+
+  &--utensils {
+    background-color: $green;
+    
+    &:hover {
+      background-color: darken($green, 10%);
     }
   }
 }

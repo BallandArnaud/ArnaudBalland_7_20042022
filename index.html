@@ -36,21 +36,14 @@
             <input type="search" placeholder="Rechercher une recette" />
             <img src="assets/icon_search.svg" alt="" srcset="" />
           </div>
-          <div class="search__tags">
-            <div class="tag tag--ingredient">
-              Coco
-              <button class="tag__btn">
-                <img src="assets/icon_close.svg" alt="close tag" />
-              </button>
-            </div>
-          </div>
+          <div class="search__tags"></div>
           <div class="search__dropdowns">
             <div id="dropdown-ingredients" class="dropdown">
               <button id="dropdown-ingredients-button" class="dropdown__btn">
                 Ingrédients
                 <img src="assets/icon_arrow_down.svg" alt="" />
               </button>
-              <div id="dropwdown-ingredients-content" class="dropdown__content">
+              <div id="dropdown-ingredients-content" class="dropdown__content">
                 <div class="dropdown__search">
                   <input id="dropdown-input-ingredients" class="dropdown__input" type="text" placeholder="Rechercher un ingrédient">
                   <img src="assets/icon_arrow_up.svg" alt="" />
@@ -63,7 +56,7 @@
                 Appareils
                 <img src="assets/icon_arrow_down.svg" alt="" />
               </button>
-              <div id="dropwdown-appliances-content" class="dropdown__content">
+              <div id="dropdown-appliances-content" class="dropdown__content">
                 <div class="dropdown__search">
                   <input id="dropdown-input-appliances" class="dropdown__input" type="text" placeholder="Rechercher un ingrédient">
                   <img src="assets/icon_arrow_up.svg" alt="" />
@@ -76,7 +69,7 @@
                 Ustensils
                 <img src="assets/icon_arrow_down.svg" alt="" />
               </button>
-              <div id="dropwdown-utensils-content" class="dropdown__content">
+              <div id="dropdown-utensils-content" class="dropdown__content">
                 <div class="dropdown__search">
                   <input id="dropdown-input-utensils" class="dropdown__input" type="text" placeholder="Rechercher un ingrédient">
                   <img src="assets/icon_arrow_up.svg" alt="" />
@@ -125,6 +118,9 @@
         </section>
       </main>
     </div>
+    <script src="scripts/search.js" type="module" ></script>
+    <script src="scripts/dropdown.js" type="module" ></script>
+    <script src="scripts/tag.js" type="module" ></script>
     <script src="scripts/index.js" type="module"></script>
   </body>
 </html>
