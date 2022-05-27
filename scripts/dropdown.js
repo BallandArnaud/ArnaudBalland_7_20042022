@@ -1,6 +1,8 @@
 import { sortAlphabetically, capitalizeFirstLetterAndLowerCaseTheRest } from "./utils/utils.js"
 import { createATag } from "./tag.js"
-import { recipes } from "../data/recipes.js"
+import { getRecipes } from "./recipesDataBuilder.js"
+
+const recipes = getRecipes()
 
 // Dropdown Ingredient
 // const $dropdownIngredients = document.getElementById("dropdown-ingredients")
@@ -48,7 +50,6 @@ export function createDropdownList(result) {
     listAllAppliances.push(applianceWithcapitalizeAndLowerCase)
 
     ustensils.forEach((utensil) => {
-      // console.log(utensil)
       const utensilWithcapitalizeAndLowerCase = capitalizeFirstLetterAndLowerCaseTheRest(utensil)
       listAllUtensils.push(utensilWithcapitalizeAndLowerCase)
     })
@@ -57,15 +58,15 @@ export function createDropdownList(result) {
 createDropdownList(recipes)
 
 // Crée une copie des tableaux en retirant les éléments doublons
-const newListAllIngredients = [...new Set(listAllIngredients)]
-const newListAllAppliances = [...new Set(listAllAppliances)]
-const newListAllUtensils = [...new Set(listAllUtensils)]
+let newListAllIngredients = [...new Set(listAllIngredients)]
+let newListAllAppliances = [...new Set(listAllAppliances)]
+let newListAllUtensils = [...new Set(listAllUtensils)]
 
 /**
  * Ajout des élements des dropdowns
  * @param {string} item - nom de l'item à ajouter
  * @param {HTMLDivElement} htmlContainer - Dans quel élément du DOM l'item doit être ajouté
- * @returns {} - l'élément du dom avec les items ajoutés
+ * @returns {HTMLDivElement} - l'élément du dom avec les items ajoutés
  */
 export function createDropdownItem(item, htmlContainer) {
   const itemList = document.createElement("li")
@@ -80,6 +81,7 @@ export function createDropdownItem(item, htmlContainer) {
 }
 
 export function updateListAllIngredients() {
+  $dropdownListIngredients.innerHTML = ""
   const listAllIngredientsByAlphabeticalOrder = sortAlphabetically(newListAllIngredients)
   listAllIngredientsByAlphabeticalOrder.forEach((ingredient) => {
     createDropdownItem(ingredient, $dropdownListIngredients)
@@ -88,6 +90,7 @@ export function updateListAllIngredients() {
 updateListAllIngredients()
 
 export function updateListAllAppliances() {
+  $dropdownListAppliances.innerHTML = ""
   const listAllAppliancesByAlphabeticalOrder = sortAlphabetically(newListAllAppliances)
   listAllAppliancesByAlphabeticalOrder.forEach((appliance) => {
     createDropdownItem(appliance, $dropdownListAppliances)
@@ -96,6 +99,7 @@ export function updateListAllAppliances() {
 updateListAllAppliances()
 
 export function updateListAllUtensils() {
+  $dropdownListUtensils.innerHTML = ""
   const listAllUtensilsByAlphabeticalOrder = sortAlphabetically(newListAllUtensils)
   listAllUtensilsByAlphabeticalOrder.forEach((utensil) => {
     createDropdownItem(utensil, $dropdownListUtensils)
@@ -103,6 +107,10 @@ export function updateListAllUtensils() {
 }
 updateListAllUtensils()
 
+/**
+ * Système pour ouvrir les dropdowns
+ * @param {string} elt - Nom de la dropdown à ouvrir
+ */
 function openDropdown(elt) {
   if (elt === "ingredients") {
     $dropdownIngredientsBtn.style.display = "none"
@@ -168,6 +176,10 @@ window.addEventListener("click", (e) => {
   }
 })
 
+let FinalDropdownListIngredients = []
+let FinalDropdownListAppliances = []
+let FinalDropdownListUtensils = []
+
 /**
  * Met à jour la liste des dropdowns après la recherche dans la search bar
  * @param {Array} results - Tableaux des recettes après tri
@@ -181,11 +193,10 @@ export function updateDropdownList(results) {
   $dropdownListAppliances.innerHTML = ""
   $dropdownListUtensils.innerHTML = ""
   createDropdownList(results)
-  const FinalListAllIngredientsByAlphabeticalOrder = sortAlphabetically(listAllIngredients)
-  const FinalListAllAppliancesByAlphabeticalOrder = sortAlphabetically(listAllAppliances)
-  const FinalListAllUtensilsByAlphabeticalOrder = sortAlphabetically(listAllUtensils)
+  const FinalListAllIngredientsByAlphabeticalOrder = sortAlphabetically([...new Set(listAllIngredients)])
+  const FinalListAllAppliancesByAlphabeticalOrder = sortAlphabetically([...new Set(listAllAppliances)])
+  const FinalListAllUtensilsByAlphabeticalOrder = sortAlphabetically([...new Set(listAllUtensils)])
   FinalListAllIngredientsByAlphabeticalOrder.forEach((ingredient) => {
-    // console.log(ingredient)
     createDropdownItem(ingredient, $dropdownListIngredients)
   })
   FinalListAllAppliancesByAlphabeticalOrder.forEach((appliance) => {
@@ -194,4 +205,61 @@ export function updateDropdownList(results) {
   FinalListAllUtensilsByAlphabeticalOrder.forEach((utensil) => {
     createDropdownItem(utensil, $dropdownListUtensils)
   })
+}
+
+$dropdownIngredientsInput.addEventListener("input", (e) => {
+  filterDropdownIngredientsList(e)
+})
+
+$dropdownAppliancesInput.addEventListener("input", (e) => {
+  filterDropdownAppliancesList(e)
+})
+
+$dropdownUtensilsInput.addEventListener("input", (e) => {
+  filterDropdownUtensilsList(e)
+})
+
+function filterDropdownIngredientsList(e) {
+  const inputValue = e.target.value.toLocaleLowerCase()
+  newListAllIngredients = [...new Set(listAllIngredients)]
+  const dropdownListIngredientFiltered = newListAllIngredients.filter((recipe) => recipe.toLocaleLowerCase().includes(inputValue))
+  if (dropdownListIngredientFiltered.length > 0) {
+    FinalDropdownListIngredients = sortAlphabetically([...dropdownListIngredientFiltered])
+    $dropdownListIngredients.innerHTML = ""
+    FinalDropdownListIngredients.forEach((element) => {
+      createDropdownItem(element, $dropdownListIngredients)
+    })
+  } else {
+    $dropdownListIngredients.innerHTML = ""
+  }
+}
+
+function filterDropdownAppliancesList(e) {
+  const inputValue = e.target.value.toLocaleLowerCase()
+  newListAllAppliances = [...new Set(listAllAppliances)]
+  const dropdownListAppliancesFiltered = newListAllAppliances.filter((recipe) => recipe.toLocaleLowerCase().includes(inputValue))
+  if (dropdownListAppliancesFiltered.length > 0) {
+    FinalDropdownListAppliances = sortAlphabetically([...dropdownListAppliancesFiltered])
+    $dropdownListAppliances.innerHTML = ""
+    FinalDropdownListAppliances.forEach((element) => {
+      createDropdownItem(element, $dropdownListAppliances)
+    })
+  } else {
+    $dropdownListAppliances.innerHTML = ""
+  }
+}
+
+function filterDropdownUtensilsList(e) {
+  const inputValue = e.target.value.toLocaleLowerCase()
+  newListAllUtensils = [...new Set(listAllUtensils)]
+  const dropdownListUtensilsFiltered = newListAllUtensils.filter((recipe) => recipe.toLocaleLowerCase().includes(inputValue))
+  if (dropdownListUtensilsFiltered.length > 0) {
+    FinalDropdownListUtensils = sortAlphabetically([...dropdownListUtensilsFiltered])
+    $dropdownListUtensils.innerHTML = ""
+    FinalDropdownListUtensils.forEach((element) => {
+      createDropdownItem(element, $dropdownListUtensils)
+    })
+  } else {
+    $dropdownListUtensils.innerHTML = ""
+  }
 }

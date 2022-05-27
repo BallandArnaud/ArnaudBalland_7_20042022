@@ -1,14 +1,8 @@
 import { initGrid } from "./grid.js"
-import { searchRecipesFromQuery } from "./search.js"
-
-// DOM
-const $searchBar = document.querySelector(".search__bar input")
+import { mainSearch } from "./search.js"
 
 function init() {
   initGrid()
-  // Listener Search Bar
-  $searchBar.addEventListener("input", (e) => {
-    searchRecipesFromQuery(e.target.value)
-  })
+  mainSearch()
 }
 init()

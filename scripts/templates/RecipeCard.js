@@ -1,4 +1,7 @@
 export class RecipeCard {
+  /**
+   * @param {Recipe} recipe
+   */
   constructor(recipe) {
     this.name = recipe.name
     this.time = recipe.time
