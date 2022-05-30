@@ -74,6 +74,9 @@ export function createDropdownItem(item, htmlContainer) {
   itemList.innerHTML = `${item} `
   htmlContainer.appendChild(itemList)
   itemList.addEventListener("click", (e) => {
+    $dropdownIngredientsInput.value = ""
+    $dropdownAppliancesInput.value = ""
+    $dropdownUtensilsInput.value = ""
     const dropdownListItem = e.target.parentElement.id.split("-")[1]
     createATag(item, dropdownListItem)
   })

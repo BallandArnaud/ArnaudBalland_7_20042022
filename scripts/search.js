@@ -1,6 +1,6 @@
 import { RecipeCard } from "./templates/RecipeCard.js"
 import { $recipeGrid, recipesDomElements } from "./grid.js"
-import { updateDropdownList, $dropdownListIngredients, $dropdownListAppliances, $dropdownListUtensils, updateListAllIngredients, updateListAllAppliances, updateListAllUtensils } from "./dropdown.js"
+import { updateDropdownList, $dropdownListIngredients, $dropdownListAppliances, $dropdownListUtensils } from "./dropdown.js"
 import { getRecipes } from "./recipesDataBuilder.js"
 import { userSearch } from "./userSearch.js"
 
@@ -59,7 +59,12 @@ export function mainSearch() {
   $tagsContainer.addEventListener("click", () => {
     if (userSearch.main.length >= 3) {
       if (userSearch.ingredients.length > 0 || userSearch.appliances.length > 0 || userSearch.ustensils.length > 0) {
+        results = retrieveMatchingRecipes(recipes, userSearch.main)
         searchAndShowRecipesWithTag(results)
+        console.log(userSearch)
+        if (resultatsWithTag.length < 1) {
+          showNoResultMessage()
+        }
       } else {
         alreadyFilterWithTag = false
         results = retrieveMatchingRecipes(recipes, userSearch.main)
@@ -132,9 +137,7 @@ function displayAllRecipes() {
 // Affiche toutes les recettes et met à jour les dropdowns
 function displayAllRecipesAndDropdownList() {
   displayAllRecipes()
-  updateListAllIngredients()
-  updateListAllAppliances()
-  updateListAllUtensils()
+  updateDropdownList(recipes)
 }
 
 // Affiche le message d'erreur et vide les dropdowns
