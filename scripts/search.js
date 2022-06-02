@@ -126,7 +126,30 @@ function searchAndShowRecipesWithTag(arr) {
  * @returns {Recipe[]} - Retourne un tableau de recettes liés à la requête
  */
 function retrieveMatchingRecipes(arr, query) {
-  return arr.filter((recipe) => recipe.name.toLowerCase().includes(query) || recipe.description.toLowerCase().includes(query) || recipe.ingredientsAsString.includes(query))
+  const matchingResults = []
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i].name.toLowerCase().includes(query)) {
+      matchingResults.push(arr[i])
+    } else if (arr[i].description.toLowerCase().includes(query)) {
+      matchingResults.push(arr[i])
+    } else if (AllIngredientsFromRecipeAsAString(arr[i]).includes(query)) {
+      matchingResults.push(arr[i])
+    }
+  }
+  return matchingResults
+}
+
+/**
+ * Crée une string de tous les ingrédients d'une recette
+ * @param {Recipe} recipe - Une recette
+ * @returns {string} - Retourne une string des ingrédients d'une recette
+ */
+function AllIngredientsFromRecipeAsAString(recipe) {
+  let ingredientsAsString = ""
+  for (let i = 0; i < recipe.ingredients.length; i++) {
+    ingredientsAsString = `${ingredientsAsString} ${recipe.ingredients[i].ingredient.toLowerCase()}`
+  }
+  return ingredientsAsString
 }
 
 // Affiche toutes les recettes
