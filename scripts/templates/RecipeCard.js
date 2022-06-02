@@ -9,21 +9,6 @@ export class RecipeCard {
     this.ingredients = recipe.ingredients
   }
 
-  shortenUnit() {
-    const newUnits = this.ingredients.map((ingredient) => {
-      switch (ingredient.unit) {
-        case "grammes":
-          return "g"
-        case "cuillères à soupe":
-          return "cuillères"
-        default:
-          return ingredient.unit
-      }
-    })
-    console.log(newUnits)
-    return newUnits
-  }
-
   createIngredientsList() {
     const ingredientDomElements = this.ingredients.map((ingredient) => {
       if (ingredient.quantity === undefined && ingredient.unit === undefined) {
@@ -34,7 +19,7 @@ export class RecipeCard {
         <span class="card__quantity">${ingredient.quantity}</span></li>`
       }
       return `<li>${ingredient.ingredient}: 
-      <span class="card__quantity">${ingredient.quantity} ${ingredient.unit}</span></li>`
+      <span class="card__quantity">${ingredient.quantity} ${shortenUnit(ingredient.unit)}</span></li>`
     })
     return ingredientDomElements.join("")
   }
@@ -60,5 +45,17 @@ export class RecipeCard {
         </div>
     </div>
     `
+  }
+}
+
+function shortenUnit(unity) {
+  switch (unity) {
+    case "grammes":
+      return "g"
+    case "cuillère à soupe":
+    case "cuillères à soupe":
+      return "c.s"
+    default:
+      return unity
   }
 }
