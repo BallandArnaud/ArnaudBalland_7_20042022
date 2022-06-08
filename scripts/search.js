@@ -61,7 +61,7 @@ export function mainSearch() {
       if (userSearch.ingredients.length > 0 || userSearch.appliances.length > 0 || userSearch.ustensils.length > 0) {
         results = retrieveMatchingRecipes(recipes, userSearch.main)
         searchAndShowRecipesWithTag(results)
-        console.log(userSearch)
+        // console.log(userSearch)
         if (resultatsWithTag.length < 1) {
           showNoResultMessage()
         }
@@ -81,7 +81,7 @@ export function mainSearch() {
 }
 
 function actionWhenADropdownItemIsClicked() {
-  console.log({ userSearch, results, resultatsWithTag, recipes })
+  // console.log({ userSearch, results, resultatsWithTag, recipes })
   if (results.length > 0) {
     searchAndShowRecipesWithTag(results)
   } else {
@@ -109,9 +109,9 @@ function searchAndShowRecipesWithTag(arr) {
   }
   if (userSearch.ustensils.length > 0) {
     if (alreadyFilterWithTag) {
-      resultatsWithTag = resultatsWithTag.filter((recipe) => userSearch.ustensils.every((utensil) => recipe.ustensils.includes(utensil.toLowerCase())))
+      resultatsWithTag = resultatsWithTag.filter((recipe) => userSearch.ustensils.every((utensil) => recipe.ustensilsLabelsList.includes(utensil)))
     } else {
-      resultatsWithTag = arr.filter((recipe) => userSearch.ustensils.every((utensil) => recipe.ustensils.includes(utensil.toLowerCase())))
+      resultatsWithTag = arr.filter((recipe) => userSearch.ustensils.every((utensil) => recipe.ustensilsLabelsList.includes(utensil)))
       alreadyFilterWithTag = true
     }
   }
