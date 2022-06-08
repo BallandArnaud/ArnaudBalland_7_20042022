@@ -9,6 +9,7 @@ export const getRecipes = () =>
     ...recipe,
     ingredientsLabelsList: recipe.ingredients.map((ingredient) => ingredient.ingredient.toLowerCase()),
     ingredientsAsString: recipe.ingredients.map((ingredient) => ingredient.ingredient.toLowerCase()).join(" "),
+    ustensilsLabelsList: recipe.ustensils.map((ustensil) => ustensil.toLowerCase()),
   }))
 
 /**
@@ -24,6 +25,7 @@ export const getRecipes = () =>
  * @property {string[]} ingredientsLabelsList
  * @property {string} ingredientsAsString
  * @property {string} utensilsAsString
+ * @property {string[]} ustensilsLabelsList
  */
 
 /**
